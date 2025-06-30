@@ -23,7 +23,8 @@ Happy Coding 🚀
 
 Changes and Implementation Notes
 
-	•	Updated kafka-setup.sh to ensure both market and trades topics use 3 partitions. Before running the script, confirm both topics exist:
+   •	Updated kafka-setup.sh to ensure both market and trades topics use 3 partitions. Before running the script, confirm both topics exist with
+
 docker exec -it t1-coding-challenge-kafka kafka-topics --bootstrap-server localhost:9092 --describe --topic market
 docker exec -it t1-coding-challenge-kafka kafka-topics --bootstrap-server localhost:9092 --describe --topic trades
  
