@@ -20,3 +20,19 @@ You can find the challenge [here](https://docs.google.com/document/d/1fhYF3M1IKb
 7. Submit the link to your forked repository
 
 Happy Coding 🚀
+
+Changes and Implementation Notes
+
+	•	Updated kafka-setup.sh to ensure both market and trades topics use 3 partitions. Before running the script, confirm both topics exist:
+docker exec -it t1-coding-challenge-kafka kafka-topics --bootstrap-server localhost:9092 --describe --topic market
+docker exec -it t1-coding-challenge-kafka kafka-topics --bootstrap-server localhost:9092 --describe --topic trades
+ 
+   •	Replaced fetch-based streaming in useStream with the EventSource in the frontend app
+
+   •	calculation-service runs with 2 instances, and uses a Kafka consumer group. This prevents duplicate processing.
+      auto.commit flag is false. This ensures that messages are only marked as “processed” after successful handling and DB insert. It prevents losing or double-processing messages if the service crashes mid-processing.
+      Two collections are used: 
+           trades_buffer: stores all trades with a TTL index
+	        pnl_results: stores calculated PnL data, with a unique index on startTime + endTime to prevent duplicate entries
+
+   •  The frontend service only fetches and returns the last 20 PnL results to avoid overwhelming the UI.

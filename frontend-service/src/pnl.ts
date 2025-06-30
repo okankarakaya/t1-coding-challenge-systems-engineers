@@ -1,8 +1,6 @@
-import { PnL } from "./types";
+import { fetchPnLResults } from './db';
+import { PnL } from './types';
 
-export function getPnls(): Array<PnL> {
-
-    // YOUR CODE HERE
-
-    return []
+export async function getPnls(): Promise<Array<PnL>> {
+    return await fetchPnLResults();
 }

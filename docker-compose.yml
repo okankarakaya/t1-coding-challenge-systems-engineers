@@ -15,7 +15,7 @@ services:
 
   kafka:
     container_name: t1-coding-challenge-kafka
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.0
     depends_on:
       - zookeeper
     ports:
@@ -41,6 +41,13 @@ services:
 
   calculation-service:
     container_name: t1-coding-challenge-calculation-service
+    build: ./calculation-service
+    depends_on:
+      - kafka-producer
+      - database
+
+  calculation-service-2:
+    container_name: t1-coding-challenge-calculation-service-2
     build: ./calculation-service
     depends_on:
       - kafka-producer
